@@ -44,7 +44,7 @@ type MLDescription struct {
 }
 
 type MLListing struct {
-	Title        string        `json:"title"`
+	FamilyName   string        `json:"family_name"`
 	CategoryID   string        `json:"category_id"`
 	Price        float64       `json:"price"`
 	CurrencyID   string        `json:"currency_id"`
@@ -130,17 +130,23 @@ func (c *Client) buildListing(
 		{ID: "ARTIST_NAME", ValueName: artist},
 		{ID: "MUSIC_ARTIST_NAME", ValueName: artist},
 		{ID: "ALBUM_NAME", ValueName: album},
-		{ID: "FAMILY_NAME", ValueName: artist},
 		{ID: "PRODUCTION_COMPANY", ValueName: label},
 		{ID: "FORMAT", ValueName: "Físico"},
 		{ID: "ALBUM_TYPE", ValueName: albumType(product)},
 		{ID: "INCLUDES_ADDITIONAL_TRACKS", ValueName: "Não"},
-		{ID: "CONDITION", ValueName: "Usado"},
 		{ID: "ORIGIN", ValueName: product.NationalityText()},
 		{ID: "GENRE", ValueName: firstGenre(product.Genres)},
 		{ID: "SONGS_NUMBER", ValueName: fmt.Sprintf("%d", songQuantity(product))},
 		{ID: "PIECES_NUMBER", ValueName: fmt.Sprintf("%d", product.LPsQuantity)},
 	}
+
+	measures := MeasuresByFormat[product.Format]
+	attributes = append(attributes,
+		MLAttribute{ID: "SELLER_PACKAGE_WIDTH", ValueName: fmt.Sprintf("%.0f cm", measures.Width)},
+		MLAttribute{ID: "SELLER_PACKAGE_HEIGHT", ValueName: fmt.Sprintf("%.0f cm", measures.Height)},
+		MLAttribute{ID: "SELLER_PACKAGE_LENGTH", ValueName: fmt.Sprintf("%.0f cm", measures.Depth)},
+		MLAttribute{ID: "SELLER_PACKAGE_WEIGHT", ValueName: fmt.Sprintf("%.0f g", measures.Weight)},
+	)
 
 	if product.ReleaseYear != nil {
 		attributes = append(attributes, MLAttribute{
@@ -157,7 +163,7 @@ func (c *Client) buildListing(
 	}
 
 	return &MLListing{
-		Title:        product.Title(titleEditor),
+		FamilyName:   product.Title(titleEditor),
 		CategoryID:   "MLB1174",
 		Price:        product.Price,
 		CurrencyID:   "BRL",
