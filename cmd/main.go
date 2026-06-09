@@ -50,6 +50,15 @@ func main() {
 	products = createProducts(input, discogsHandler, pictureHandler, products)
 
 	products = confirmProducts(input, products)
+
+	fmt.Println("\nverificando títulos...")
+	for _, p := range products {
+		title := p.Title(utils.EditTitle)
+		p.TitleOverride = &title
+		desc := p.Description()
+		p.DescriptionOverride = &desc
+	}
+
 	saveJSONProducts(products)
 
 	if config.AppConfig.JsonDirectoryPath != "" {
