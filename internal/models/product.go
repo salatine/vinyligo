@@ -83,21 +83,22 @@ func (p *Product) Description() string {
 		desc = "PRODUTO USADO EM BOM ESTADO."
 	}
 
-	var extras string
+	gatefold := ""
 	if p.GatefoldQuantity >= 2 {
-		extras = "COM ENCARTES. "
+		gatefold = "COM ENCARTES. "
 	} else if p.GatefoldQuantity == 1 {
-		extras = "COM ENCARTE. "
+		gatefold = "COM ENCARTE. "
 	}
 
+	lps := ""
 	if p.LPsQuantity > 1 && p.LPsQuantity < 10 {
-		extras += fmt.Sprintf("DISCO %s. ", strings.ToUpper(QuantityTranslation[p.LPsQuantity]))
+		lps = fmt.Sprintf("DISCO %s. ", strings.ToUpper(QuantityTranslation[p.LPsQuantity]))
 	}
 	if p.IsDoubleCovered {
-		extras += "CAPA DUPLA."
+		lps += "CAPA DUPLA."
 	}
 	if p.IsImported != nil && *p.IsImported {
-		extras += " IMPORTADO."
+		lps += " IMPORTADO."
 	}
 
 	obs := ""
@@ -105,7 +106,7 @@ func (p *Product) Description() string {
 		obs = *p.Observation
 	}
 
-	return fmt.Sprintf("%s\n%s\n%s", desc, extras, obs)
+	return fmt.Sprintf("%s\n%s %s\n%s", desc, gatefold, lps, obs)
 }
 
 func (p *Product) NationalityText() string {
