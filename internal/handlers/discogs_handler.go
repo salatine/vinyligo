@@ -54,10 +54,7 @@ func (h *DiscogsHandler) GetProductSuggestion() (*models.ProductSuggestion, erro
 
 			for i := 0; i < n; i++ {
 				r := releases[i]
-				catNo := ""
-				if len(r.Labels) > 0 {
-					catNo = r.Labels[0].Catno
-				}
+				catNo := r.Catno
 				format := ""
 				if len(r.Formats) > 0 {
 					format = r.Formats[0].Name

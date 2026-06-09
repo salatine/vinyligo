@@ -36,8 +36,9 @@ type Release struct {
 	Title   string   `json:"title"`
 	Year    string   `json:"year"`
 	Country string   `json:"country"`
+	Catno   string   `json:"catno"`
 	Formats []Format `json:"formats"`
-	Labels  []Label  `json:"labels"`
+	Labels  []string `json:"label"`
 	Artists []Artist `json:"artists"`
 	Genres  []string `json:"genre"`
 }
