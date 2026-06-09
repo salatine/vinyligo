@@ -130,6 +130,7 @@ func (c *Client) buildListing(
 		{ID: "ARTIST_NAME", ValueName: artist},
 		{ID: "MUSIC_ARTIST_NAME", ValueName: artist},
 		{ID: "ALBUM_NAME", ValueName: album},
+		{ID: "FAMILY_NAME", ValueName: artist},
 		{ID: "PRODUCTION_COMPANY", ValueName: label},
 		{ID: "FORMAT", ValueName: "Físico"},
 		{ID: "ALBUM_TYPE", ValueName: albumType(product)},
