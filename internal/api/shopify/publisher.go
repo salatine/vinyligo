@@ -8,37 +8,52 @@ import (
 	"github.com/salatine/vinyligo/internal/models"
 )
 
+var VinylTagRelations = map[string]string{
+	"all": "LPs", "novo": "LPs - Novos / Lacrados",
+	"nacional": "LPs - Nacional", "internacional": "LPs - Internacional",
+	"compactos": "LPs - Compactos", "compactos-nacional": "LPs - Compactos Nacional", "compactos-internacional": "LPs - Compactos Internacional",
+	"mpb": "LPs - MPB", "dance": "LPs - Dance Music", "electronic": "LPs - Dance Music",
+	"soul": "LPs - Soul / Funk / Black", "funk": "LPs - Soul / Funk / Black", "black": "LPs - Soul / Funk / Black",
+	"blues": "LPs - Blues & Jazz", "jazz": "LPs - Blues & Jazz",
+	"trilhas": "LPs - Trilhas Sonoras", "trilhas-nacional": "LPs - Trilhas Sonoras Nacional", "trilhas-internacional": "LPs - Trilhas Sonoras Internacional",
+	"rock-nacional": "LPs - Rock/POP Nacional", "pop-nacional": "LPs - Rock/POP Nacional",
+	"rock-internacional": "LPs - Rock/POP Internacional", "pop-internacional": "LPs - Rock/POP Internacional",
+	"samba": "LPs - Samba & Pagode", "pagode": "LPs - Samba & Pagode",
+	"sertanejo": "LPs - Sertanejo",
+	"classica": "LPs - Clássicas e Orquestras", "orquestra": "LPs - Clássicas e Orquestras",
+	"latin": "LPs - Latinas e Europeias",
+	"metal": "LPs - Metal",
+	"outros": "LPs - Outros", "outros-nacional": "LPs - Outros Nacional", "outros-internacional": "LPs - Outros Internacional",
+}
+
 var TagRelations = map[string]map[string]string{
-	"Lp Vinil": {
-		"all": "LPs", "mpb": "LPs - MPB", "metal": "LPs - Metal",
-		"blues": "LPs - Blues & Jazz", "jazz": "LPs - Blues & Jazz",
-		"dance": "LPs - Dance Music", "trilhas": "LPs - Trilhas Sonoras",
-		"rock-nacional": "LPs - Rock/POP Nacional", "pop-nacional": "LPs - Rock/POP Nacional",
-		"rock-internacional": "LPs - Rock/POP Internacional", "pop-internacional": "LPs - Rock/POP Internacional",
-		"samba": "LPs - Samba & Pagode", "pagode": "LPs - Samba & Pagode",
-		"sertanejo": "LPs - Sertanejo",
-		"classica": "LPs - Clássicas e Orquestras", "orquestra": "LPs - Clássicas e Orquestras",
-		"latin": "LPs - Latinas e Europeias",
-		"outros": "LPs - Outros", "outros-nacional": "LPs - Outros Nacional", "outros-internacional": "LPs - Outros Internacional",
-	},
-	"Compacto Vinil": {
-		"all": "Compactos", "mpb": "Compactos - MPB", "metal": "Compactos - Metal",
-		"blues": "Compactos - Blues & Jazz", "jazz": "Compactos - Blues & Jazz",
-		"rock-nacional": "Compactos - Rock/POP Nacional", "pop-nacional": "Compactos - Rock/POP Nacional",
-		"rock-internacional": "Compactos - Rock/POP Internacional", "pop-internacional": "Compactos - Rock/POP Internacional",
-		"outros": "Compactos - Outros", "outros-nacional": "Compactos - Outros Nacional", "outros-internacional": "Compactos - Outros Internacional",
-	},
+	"Lp Vinil":       VinylTagRelations,
+	"Compacto Vinil": VinylTagRelations,
 	"CD": {
 		"all": "CDs", "mpb": "CDs - MPB", "metal": "CDs - Metal",
 		"blues": "CDs - Blues & Jazz", "jazz": "CDs - Blues & Jazz",
 		"dance": "CDs - Dance Music", "trilhas": "CDs - Trilhas Sonoras",
 		"rock-nacional": "CDs - Rock/POP Nacional", "pop-nacional": "CDs - Rock/POP Nacional",
 		"rock-internacional": "CDs - Rock/POP Internacional", "pop-internacional": "CDs - Rock/POP Internacional",
-		"outros": "CDs - Outros", "outros-nacional": "CDs - Outros Nacional", "outros-internacional": "CDs - Outros Internacional",
+		"samba": "CDs - Samba & Pagode", "pagode": "CDs - Samba & Pagode",
+		"sertanejo": "CDs - Sertanejo", "forró": "CDs - Forró",
+		"outros": "CDs - Outros",
 	},
-	"DVD":             {"all": "DVDs"},
-	"Fita K7 Cassete": {"all": "Fitas K7"},
-	"LD LaserDisc":    {"all": "LDs LaserDisc"},
+	"DVD": {
+		"all": "DVDs - Música",
+		"rock-nacional": "DVDs Música - Rock/POP Nacional", "pop-nacional": "DVDs Música - Rock/POP Nacional",
+		"rock-internacional": "DVDs Música - Rock/POP Internacional", "pop-internacional": "DVDs Música - Rock/POP Internacional",
+		"mpb": "DVDs Música - MPB",
+		"samba": "DVDs Música - Samba & Pagode", "pagode": "DVDs Música - Samba & Pagode",
+		"sertanejo": "DVDs Música - Sertanejo",
+		"ópera": "DVDs Música - Ópera",
+		"forró": "DVDs Música - Forró & Música Nordestina",
+		"outros": "DVDs Música - Outros",
+	},
+	"Fita K7 Cassete": {"all": "K7"},
+	"LD LaserDisc": {
+		"all": "Outros", "nacional": "Outros - LD LaserDisc", "internacional": "Outros - LD LaserDisc",
+	},
 }
 
 type GraphQLResponse struct {
