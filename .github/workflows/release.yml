@@ -38,7 +38,7 @@ jobs:
           name: "Pre-release ${{ steps.version.outputs.version }}"
           prerelease: true
           files: |
-            build/myapp-linux
-            build/myapp-windows.exe
+            build/${{ env.APP_NAME }}-linux
+            build/${{ env.APP_NAME }}-windows.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
