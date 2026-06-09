@@ -136,6 +136,10 @@ func (c *Client) buildListing(
 		{ID: "ALBUM_TYPE", ValueName: albumType(product)},
 		{ID: "INCLUDES_ADDITIONAL_TRACKS", ValueName: "Não"},
 		{ID: "CONDITION", ValueName: "Usado"},
+		{ID: "ORIGIN", ValueName: product.NationalityText()},
+		{ID: "GENRE", ValueName: firstGenre(product.Genres)},
+		{ID: "SONGS_NUMBER", ValueName: fmt.Sprintf("%d", songQuantity(product))},
+		{ID: "PIECES_NUMBER", ValueName: fmt.Sprintf("%d", product.LPsQuantity)},
 	}
 
 	if product.ReleaseYear != nil {
@@ -172,4 +176,18 @@ func albumType(product *models.Product) string {
 		return fmt.Sprintf("%d %ss", product.LPsQuantity, strings.ReplaceAll(product.Format, " Vinil", ""))
 	}
 	return product.Format
+}
+
+func firstGenre(genres []string) string {
+	if len(genres) == 0 {
+		return "Rock"
+	}
+	return genres[0]
+}
+
+func songQuantity(product *models.Product) int {
+	if product.SongQuantity != nil && *product.SongQuantity > 0 {
+		return *product.SongQuantity
+	}
+	return 1
 }
