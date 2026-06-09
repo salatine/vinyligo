@@ -524,10 +524,6 @@ func getPictures(input *handlers.InputHandler, format string, isNew bool) []stri
 		pictures = getPicturesLinux(input)
 	}
 
-	if format == "Lp Vinil" && !isNew && len(pictures) > 1 {
-		pictures = append(pictures[len(pictures)-1:], pictures[:len(pictures)-1]...)
-	}
-
 	return pictures
 }
 
