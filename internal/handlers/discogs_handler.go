@@ -62,7 +62,11 @@ func (h *DiscogsHandler) GetProductSuggestion() (*models.ProductSuggestion, erro
 				if len(r.Formats) > 0 {
 					format = r.Formats[0].Name
 				}
-				fmt.Printf("%d: %s. Ano de lançamento: %s. Format: %s. País: %s. Código: %s\n", i, r.Title, r.Year, format, r.Country, catNo)
+				year := r.Year
+			if year == "" {
+				year = "?"
+			}
+			fmt.Printf("%d: %s. Ano de lançamento: %s. Format: %s. País: %s. Código: %s\n", i, r.Title, year, format, r.Country, catNo)
 			}
 
 			fmt.Println("\nn: pular  r: pesquisar novamente  q: sair")
@@ -149,8 +153,12 @@ func (h *DiscogsHandler) buildSuggestion(release discogs.Release) (*models.Produ
 	isDoubleCovered := false
 	songQty := len(details.Tracklist)
 	albumDuration := details.GetAlbumDuration()
-	releaseYear := details.Year
 	isImported := details.Country != "Brazil"
+
+	var releaseYear *int
+	if details.Year != 0 {
+		releaseYear = &details.Year
+	}
 
 	return &models.ProductSuggestion{
 		Format:          &format,
@@ -164,7 +172,7 @@ func (h *DiscogsHandler) buildSuggestion(release discogs.Release) (*models.Produ
 		IsDoubleCovered: &isDoubleCovered,
 		SongQuantity:    &songQty,
 		AlbumDuration:   &albumDuration,
-		ReleaseYear:     &releaseYear,
+		ReleaseYear:     releaseYear,
 		Label:           &label,
 		Observation:     nil,
 		IsImported:      &isImported,
