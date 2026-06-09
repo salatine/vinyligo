@@ -15,8 +15,8 @@ import (
 
 const (
 	imgbbURL    = "https://api.imgbb.com/1/upload"
-	maxWidth    = 1200
-	jpegQuality = 70
+	maxWidth    = 800
+	jpegQuality = 50
 )
 
 type PictureHandler struct {
@@ -28,14 +28,13 @@ func NewPictureHandler(apiKey string) *PictureHandler {
 }
 
 func (h *PictureHandler) UploadPicture(picturePath string) (string, error) {
-	img, err := imaging.Open(picturePath)
+	img, err := imaging.Open(picturePath, imaging.AutoOrientation(true))
 	if err != nil {
 		return "", err
 	}
 
-	bounds := img.Bounds()
-	if bounds.Dx() > maxWidth {
-		img = imaging.Resize(img, maxWidth, 0, imaging.Lanczos)
+	if img.Bounds().Dx() > maxWidth {
+		img = imaging.Resize(img, maxWidth, 0, imaging.Box)
 	}
 
 	var buf bytes.Buffer
