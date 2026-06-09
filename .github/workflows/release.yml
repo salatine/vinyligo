@@ -1,0 +1,42 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: "vinyligo"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - run: mkdir -p build
+      
+      - id: version
+        run: |
+          VERSION="v0.0.0-$(date +%Y%m%d%H%M%S)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - run: |
+          GOOS=linux GOARCH=amd64 go build -o build/${{ env.APP_NAME }}-linux ./cmd/main.go
+          GOOS=windows GOARCH=amd64 go build -o build/${{ env.APP_NAME }}-windows.exe ./cmd/main.go
+          
+      - run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push origin ${{ steps.version.outputs.version }}
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: "Pre-release ${{ steps.version.outputs.version }}"
+          prerelease: true
+          files: |
+            build/${{ env.APP_NAME }}-linux
+            build/${{ env.APP_NAME }}-windows.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
