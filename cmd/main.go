@@ -520,11 +520,12 @@ func getPictures(input *handlers.InputHandler, format string, isNew bool) []stri
 
 	if runtime.GOOS == "windows" {
 		pictures = getPicturesWindows()
-		if format == "Lp Vinil" && !isNew && len(pictures) > 1 {
-			pictures = append(pictures[len(pictures)-1:], pictures[:len(pictures)-1]...)
-        }
 	} else {
 		pictures = getPicturesLinux(input)
+	}
+
+	if format == "Lp Vinil" && !isNew && len(pictures) > 1 {
+		pictures = append(pictures[1:], pictures[0])
 	}
 
 	return pictures
