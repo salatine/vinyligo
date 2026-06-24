@@ -223,6 +223,7 @@ func (c *Client) PublishProduct(product *models.Product, titleEditor func(string
 		"variants": []map[string]interface{}{{
 			"id":              variant.ID,
 			"price":           fmt.Sprintf("%.2f", product.Price),
+			"taxable": false,
 			"inventoryPolicy": "DENY",
 			"inventoryItem": map[string]interface{}{
 				"tracked":          true,
